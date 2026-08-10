@@ -72,3 +72,17 @@ body {
 .cosmic-marquee-track:hover .cosmic-marquee {
   animation-play-state: paused;
 }
+
+@keyframes cosmic-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.cosmic-float {
+  animation: cosmic-float 4s ease-in-out infinite;
+}
