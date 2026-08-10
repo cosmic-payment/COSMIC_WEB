@@ -1,12 +1,46 @@
+import Image from "next/image";
 import Link from "next/link";
+import NewsletterForm from "@/components/navigation/newsletter-form";
+import { AppStoreBadges } from "@/components/base/app-store-badges";
 
-const navLinks = [
-  "Home",
-  "Products",
-  "Currencies",
-  "Contact us ",
-  "FAQ",
+const linkColumns = [
+  {
+    title: "Company",
+    links: ["About Us", "Careers", "Press & Media", "Blog", "Investor Relations"],
+  },
+  {
+    title: "Products",
+    links: [
+      "Payments",
+      "Payouts",
+      "Cards",
+      "Multi-Currency Account",
+      "Pricing",
+    ],
+  },
+  {
+    title: "Resources",
+    links: [
+      "Help Center",
+      "API Documentation",
+      "Developers",
+      "System Status",
+      "Community",
+    ],
+  },
+  {
+    title: "Legal & Policies",
+    links: [
+      "Privacy Policy",
+      "Terms of Service",
+      "Cookie Policy",
+      "Licenses",
+      "Compliance",
+    ],
+  },
 ];
+
+const bottomLinks = ["Privacy", "Terms", "Cookies", "Licenses"];
 
 function InstagramIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
@@ -55,19 +89,30 @@ const socialLinks = [
 export default function Footer() {
   return (
     <footer className="border-t border-slate-200 bg-slate-50">
-      <div className="mx-auto max-w-7xl px-6 pb-12 pt-16 sm:px-8">
-        <div className="grid grid-cols-1 gap-12 pb-16 md:grid-cols-12">
-          <div className="md:col-span-6">
+      <div className="mx-auto max-w-7xl px-6 pb-10 pt-14 sm:px-8">
+        <div className="grid grid-cols-1 gap-12 pb-12 lg:grid-cols-12">
+          <div className="lg:col-span-4">
             <Link
               href="/"
-              className="text-2xl font-black italic tracking-tighter text-slate-900"
+              className="flex items-center gap-2"
             >
-              COSMIC.
+              <Image
+                src="/logo2.png"
+                alt="COSMIC logo"
+                width={32}
+                height={32}
+                className="h-8 w-auto"
+              />
+              <span className="font-display text-2xl font-black tracking-tight text-slate-900">
+                COSMIC.
+              </span>
             </Link>
-            <h2 className="mt-6 max-w-md text-3xl font-extrabold leading-tight tracking-tight text-slate-900 sm:text-4xl">
-              Start sending money the smart way
-            </h2>
-            <div className="mt-8 flex items-center gap-3">
+            <p className="mt-4 max-w-sm text-sm leading-relaxed text-slate-500">
+              The trusted cross-border payment platform. Move money across 45+
+              currencies fast, securely, and without the high banking fees.
+            </p>
+
+            <div className="mt-6 flex items-center gap-3">
               {socialLinks.map(({ label, Icon }) => (
                 <Link
                   key={label}
@@ -79,39 +124,65 @@ export default function Footer() {
                 </Link>
               ))}
             </div>
+
+            <div className="mt-8">
+              <p className="text-sm font-semibold text-slate-900">
+                Download the COSMIC app
+              </p>
+              <AppStoreBadges className="mt-3" />
+            </div>
           </div>
 
-          <div className="md:col-span-3">
-            <nav className="flex flex-col space-y-3.5">
-              {navLinks.map((label) => (
-                <Link
-                  key={label}
-                  href="#"
-                  className="text-sm font-semibold text-slate-800 transition-colors hover:text-blue-600"
-                >
-                  {label}
-                </Link>
-              ))}
-            </nav>
+          <div className="grid grid-cols-2 gap-8 sm:grid-cols-4 lg:col-span-8">
+            {linkColumns.map((column) => (
+              <div key={column.title}>
+                <h3 className="text-sm font-semibold text-slate-900">
+                  {column.title}
+                </h3>
+                <ul className="mt-4 space-y-3">
+                  {column.links.map((label) => (
+                    <li key={label}>
+                      <Link
+                        href="#"
+                        className="text-sm text-slate-500 transition-colors hover:text-blue-600"
+                      >
+                        {label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
+        </div>
 
-          <div className="md:col-span-3">
-            <span className="mb-4 block text-base font-semibold text-slate-900">
-              Download app
-            </span>
-            <Link
-              href="#"
-              className="inline-flex items-center rounded-full bg-slate-900 px-5 py-3 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:bg-blue-600"
-            >
-              Download Now
-            </Link>
+        <div className="flex flex-col gap-6 border-t border-slate-200 py-8 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h3 className="text-base font-bold text-slate-900">
+              Get product updates
+            </h3>
+            <p className="mt-1 text-sm text-slate-500">
+              Join 40,000+ subscribers for the latest from COSMIC.
+            </p>
           </div>
+          <NewsletterForm />
         </div>
 
         <div className="flex flex-col items-center justify-between gap-4 border-t border-slate-200 pt-8 sm:flex-row">
           <p className="text-xs font-medium text-slate-500">
             Copyright © COSMIC 2026. All Rights Reserved.
           </p>
+          <div className="flex flex-wrap items-center justify-center gap-5">
+            {bottomLinks.map((label) => (
+              <Link
+                key={label}
+                href="#"
+                className="text-xs font-medium text-slate-500 transition-colors hover:text-blue-600"
+              >
+                {label}
+              </Link>
+            ))}
+          </div>
           <p className="text-xs font-semibold text-slate-800">
             Powered by COSMIC
           </p>
