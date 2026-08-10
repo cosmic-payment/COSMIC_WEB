@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
 
@@ -34,9 +35,18 @@ export default function MarketingNavbar() {
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-8">
         <Link
           href="/"
-          className="text-2xl font-black italic tracking-tight text-blue-950"
+          className="flex items-center gap-2"
         >
-          COSMIC.
+          <Image
+            src="/logo2.png"
+            alt="COSMIC logo"
+            width={32}
+            height={32}
+            className="h-8 w-auto"
+          />
+          <span className="font-display text-2xl font-black tracking-tight text-blue-950">
+            COSMIC.
+          </span>
         </Link>
 
         <nav
@@ -56,7 +66,7 @@ export default function MarketingNavbar() {
 
         <Link
           href="#"
-          className="hidden rounded-full border border-blue-600 bg-white px-5 py-2.5 text-sm font-semibold text-blue-950 transition-colors duration-200 hover:border-blue-600 hover:bg-blue-600 hover:text-white md:inline-flex"
+          className="hidden rounded-full bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white md:inline-flex"
         >
           Get Started
         </Link>
@@ -98,7 +108,7 @@ export default function MarketingNavbar() {
               <Link
                 href="#"
                 onClick={() => setMobileOpen(false)}
-                className="block rounded-full border border-blue-600 bg-white px-5 py-3 text-center text-sm font-semibold text-blue-950 transition-colors duration-200 hover:border-blue-600 hover:bg-blue-600 hover:text-white"
+                className="block rounded-full bg-blue-600 px-5 py-3 text-center text-sm font-semibold text-white"
               >
                 Get Started
               </Link>
