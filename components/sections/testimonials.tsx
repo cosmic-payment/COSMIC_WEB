@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { GridPattern } from "@/components/base/grid-pattern";
 import { Reveal } from "@/components/base/motion/reveal";
 
 const reviews = [
@@ -87,8 +88,9 @@ function MarqueeRow({ reverse = false }: { reverse?: boolean }) {
 
 export default function Testimonials() {
   return (
-    <section className="relative overflow-hidden bg-slate-50 py-20 sm:py-28">
-      <div className="mx-auto mb-16 max-w-3xl px-6 text-center">
+    <section className="relative overflow-hidden bg-slate-50 py-14 sm:py-20">
+      <GridPattern />
+      <div className="relative mx-auto mb-16 max-w-3xl px-6 text-center">
         <Reveal>
           <span className="mb-3 inline-block border-b-2 border-blue-600 pb-1 text-xs font-bold uppercase tracking-wider text-blue-600">
             Reviews
@@ -104,7 +106,7 @@ export default function Testimonials() {
         </Reveal>
       </div>
 
-      <div className="flex flex-col gap-6">
+      <div className="relative flex flex-col gap-6">
         <MarqueeRow />
         <MarqueeRow reverse />
       </div>

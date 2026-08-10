@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { CheckCircle2 } from "lucide-react";
 import { CreditCard } from "@/components/shared-assets/credit-card/credit-card";
+import { GridPattern } from "@/components/base/grid-pattern";
 import { Reveal } from "@/components/base/motion/reveal";
 
 const checklist = [
@@ -20,8 +21,9 @@ const nations = [
 
 export default function Currencies() {
   return (
-    <section className="bg-gradient-to-br from-blue-950 via-blue-800 to-blue-600">
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-12 px-6 py-20 sm:px-8 sm:py-28">
+    <section className="relative overflow-hidden bg-gradient-to-br from-blue-950 via-blue-800 to-blue-600">
+      <GridPattern color="rgba(255,255,255,0.06)" />
+      <div className="relative mx-auto flex max-w-7xl items-center justify-between gap-12 px-6 py-14 sm:px-8 sm:py-20">
         <div className="max-w-3xl text-left">
           <Reveal>
             <span className="inline-block border-b-2 border-white/70 pb-1 text-xs font-bold uppercase tracking-wider text-white">

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { CheckCircle2 } from "lucide-react";
 import { WalletCard } from "@/components/shared-assets/wallet/wallet";
+import { GridPattern } from "@/components/base/grid-pattern";
 import { Reveal } from "@/components/base/motion/reveal";
 
 const features = [
@@ -11,11 +12,18 @@ const features = [
 
 export default function CardFeature() {
   return (
-    <section className="bg-white">
-      <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 px-6 py-20 sm:px-8 lg:grid-cols-2 lg:gap-16">
+    <section className="relative overflow-hidden bg-slate-50 py-14 sm:py-20">
+      <GridPattern />
+
+      <div
+        className="pointer-events-none absolute -right-24 top-0 h-80 w-80 rounded-full bg-blue-500/10 blur-3xl"
+        aria-hidden="true"
+      />
+
+      <div className="relative mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 px-6 lg:grid-cols-2 lg:gap-16">
         <Reveal>
-          <div className="flex justify-center py-6">
-            <div className="scale-125">
+          <div className="flex justify-center py-8">
+            <div className="scale-[1.55]">
               <WalletCard />
             </div>
           </div>

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { CheckCircle2 } from "lucide-react";
 import Globe3DDemo from "@/components/3d-globe-demo";
+import { GridPattern } from "@/components/base/grid-pattern";
 import { Reveal } from "@/components/base/motion/reveal";
 
 const points = [
@@ -11,8 +12,9 @@ const points = [
 
 export default function Api() {
   return (
-    <section className="bg-white">
-      <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-16 px-6 py-20 sm:px-8 sm:py-28 lg:grid-cols-2">
+    <section className="relative overflow-hidden bg-white">
+      <GridPattern />
+      <div className="relative mx-auto grid max-w-7xl grid-cols-1 items-center gap-16 px-6 py-14 sm:px-8 sm:py-20 lg:grid-cols-2">
         <div className="text-left">
           <Reveal>
             <span className="inline-block border-b-2 border-blue-600 pb-1 text-xs font-bold uppercase tracking-wider text-blue-600">
