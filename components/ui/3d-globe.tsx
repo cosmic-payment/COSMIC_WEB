@@ -1,6 +1,13 @@
 "use client";
 /* eslint-disable react-hooks/immutability */
-import React, { useRef, useMemo, useState, useCallback, Suspense } from "react";
+import React, {
+  useRef,
+  useMemo,
+  useState,
+  useCallback,
+  useSyncExternalStore,
+  Suspense,
+} from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { OrbitControls, Html, useTexture } from "@react-three/drei";
 import * as THREE from "three";
@@ -84,6 +91,72 @@ const DEFAULT_EARTH_TEXTURE =
   "https://unpkg.com/three-globe@2.31.0/example/img/earth-blue-marble.jpg";
 const DEFAULT_BUMP_TEXTURE =
   "https://unpkg.com/three-globe@2.31.0/example/img/earth-topology.png";
+
+// ============================================================================
+// three.js console patching (silences upstream deprecation noise)
+// ============================================================================
+// @react-three/fiber still instantiates THREE.Clock internally (deprecated in
+// r183). Filter that single deprecation warning so it doesn't spam the console
+// on every Canvas mount.
+// ============================================================================
+
+let threeConsolePatched = false;
+
+function patchThreeConsole() {
+  if (threeConsolePatched) return;
+  threeConsolePatched = true;
+  const original = THREE.getConsoleFunction();
+  THREE.setConsoleFunction((type, message, ...params) => {
+    if (type === "warn" && message.startsWith("THREE.Clock")) {
+      return;
+    }
+    if (original) {
+      original(type, message, ...params);
+    } else {
+      const method =
+        type === "warn" ? console.warn : type === "error" ? console.error : console.log;
+      method(message, ...params);
+    }
+  });
+}
+
+// ============================================================================
+// WebGL support detection
+// ============================================================================
+// Once Chrome blocks WebGL context creation for a page, every subsequent
+// getContext() call returns null and fiber's WebGLRenderer throws, producing an
+// endless stream of unhandledRejection errors. Detect support up front so we can
+// render a fallback instead of mounting a doomed Canvas.
+// ============================================================================
+
+let cachedWebglAvailability: boolean | null = null;
+
+function isWebGLAvailable(): boolean {
+  if (cachedWebglAvailability !== null) return cachedWebglAvailability;
+  if (
+    typeof window === "undefined" ||
+    typeof WebGL2RenderingContext === "undefined"
+  ) {
+    return false;
+  }
+  let available = false;
+  try {
+    const canvas = document.createElement("canvas");
+    available = !!canvas.getContext("webgl2");
+  } catch {
+    available = false;
+  }
+  cachedWebglAvailability = available;
+  return available;
+}
+
+if (typeof window !== "undefined") {
+  patchThreeConsole();
+}
+
+const emptySubscribe = () => () => {};
+
+const serverWebglSnapshot = () => false;
 
 // ============================================================================
 // Utility Functions
@@ -516,34 +589,51 @@ export function Globe3D({
     [config],
   );
 
+  // Detect WebGL availability hydration-safely: on the server and during the
+  // initial client render the "server snapshot" (false) is used so HTML matches;
+  // immediately after hydration the real client value takes over.
+  const webglReady = useSyncExternalStore(
+    emptySubscribe,
+    isWebGLAvailable,
+    serverWebglSnapshot,
+  );
+
   return (
     <div className={cn("relative h-[500px] w-full", className)}>
-      <Canvas
-        gl={{
-          antialias: true,
-          alpha: true,
-          powerPreference: "high-performance",
-        }}
-        dpr={[1, 2]}
-        camera={{
-          fov: 45,
-          near: 0.1,
-          far: 1000,
-          position: [0, 0, mergedConfig.radius * 3.5],
-        }}
-        style={{
-          background: mergedConfig.backgroundColor || "transparent",
-        }}
-      >
-        <Suspense fallback={<LoadingFallback />}>
-          <Scene
-            markers={markers}
-            config={mergedConfig}
-            onMarkerClick={onMarkerClick}
-            onMarkerHover={onMarkerHover}
-          />
-        </Suspense>
-      </Canvas>
+      {webglReady ? (
+        <Canvas
+          gl={{
+            antialias: true,
+            alpha: true,
+            failIfMajorPerformanceCaveat: false,
+          }}
+          dpr={[1, 1.5]}
+          camera={{
+            fov: 45,
+            near: 0.1,
+            far: 1000,
+            position: [0, 0, mergedConfig.radius * 3.5],
+          }}
+          style={{
+            background: mergedConfig.backgroundColor || "transparent",
+          }}
+        >
+          <Suspense fallback={<LoadingFallback />}>
+            <Scene
+              markers={markers}
+              config={mergedConfig}
+              onMarkerClick={onMarkerClick}
+              onMarkerHover={onMarkerHover}
+            />
+          </Suspense>
+        </Canvas>
+      ) : (
+        <div className="absolute inset-0 flex items-center justify-center bg-neutral-100">
+          <span className="shrink-0 text-sm text-neutral-500">
+            3D globe unavailable — WebGL is not supported in this browser.
+          </span>
+        </div>
+      )}
     </div>
   );
 }
