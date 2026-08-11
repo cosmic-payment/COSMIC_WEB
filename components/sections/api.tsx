@@ -1,6 +1,6 @@
+import Image from "next/image";
 import Link from "next/link";
 import { CheckCircle2 } from "lucide-react";
-import Globe3DDemo from "@/components/3d-globe-demo";
 import { GridPattern } from "@/components/base/grid-pattern";
 import { Reveal } from "@/components/base/motion/reveal";
 
@@ -70,7 +70,13 @@ export default function Api() {
 
         <Reveal delay={0.2}>
           <div className="flex items-center justify-center">
-            <Globe3DDemo />
+            <Image
+              src="/cosmicglobe.png"
+              alt="3D globe visualization of COSMIC global payments"
+              width={1536}
+              height={1024}
+              className="h-auto w-[680px] max-w-full"
+            />
           </div>
         </Reveal>      </div>
     </section>

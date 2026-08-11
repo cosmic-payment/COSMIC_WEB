@@ -1,5 +1,5 @@
-import Image from "next/image";
 import { Avatar } from "@/components/base/avatar/avatar";
+import Image from "next/image";
 import { AppStoreBadges } from "@/components/base/app-store-badges";
 import { GridPattern } from "@/components/base/grid-pattern";
 import { Reveal } from "@/components/base/motion/reveal";
@@ -36,7 +36,7 @@ export default function Hero() {
         aria-hidden="true"
       />
 
-      <div className="relative mx-auto max-w-7xl px-6 py-8 sm:px-8 sm:py-12">
+      <div className="relative mx-auto max-w-7xl px-2 py-8 sm:px-4 sm:py-12">
         <div className="max-w-2xl text-left">
           <Reveal>
             <div className="inline-flex items-center gap-2 rounded-full border border-blue-100 bg-blue-50 px-4 py-2">
@@ -99,7 +99,7 @@ export default function Hero() {
           width={1536}
           height={1024}
           priority
-          className="absolute right-0 top-[42%] hidden h-auto w-[500px] -translate-y-1/2 xl:block"
+          className="absolute -right-12 top-[42%] hidden h-auto w-[680px] -translate-y-1/2 xl:block"
         />
       </div>
     </section>

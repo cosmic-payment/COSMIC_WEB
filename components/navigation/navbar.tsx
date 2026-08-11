@@ -7,9 +7,9 @@ import { Menu, X } from "lucide-react";
 
 const navItems = [
   { label: "Products", href: "#" },
-  { label: "Contact us", href: "#" },
+  { label: "Contact us", href: "/contact" },
   { label: "Currencies", href: "#" },
-  { label: "FAQ", href: "#" },
+  { label: "FAQ", href: "/faq" },
 ];
 
 export default function MarketingNavbar() {

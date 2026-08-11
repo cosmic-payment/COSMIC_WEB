@@ -195,19 +195,6 @@ const WALLET_CSS = `
 .cosmic-wallet .wallet:hover .usa {
   transform: translateY(-10px);
 }
-.cosmic-wallet .card:hover {
-  z-index: 100 !important;
-  transition-delay: 0s !important;
-}
-.cosmic-wallet .wallet:hover .kenya:hover {
-  transform: translateY(-60px) scale(1.05) rotate(0);
-}
-.cosmic-wallet .wallet:hover .uk:hover {
-  transform: translateY(-70px) scale(1.05) rotate(0);
-}
-.cosmic-wallet .wallet:hover .usa:hover {
-  transform: translateY(-60px) scale(1.05) rotate(0);
-}
 .cosmic-wallet .card:hover .hidden-stars {
   display: none;
 }
