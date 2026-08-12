@@ -6,14 +6,19 @@ import { AppStoreBadges } from "@/components/base/app-store-badges";
 const linkColumns = [
   {
     title: "Company",
-    links: ["About Us", "Careers", "Press & Media", "Blog", "Investor Relations"],
+    links: [
+      "About Us", 
+      "Careers",
+       "Press & Media", 
+       "Blog","Patnerships"
+      ],
   },
   {
     title: "Products",
     links: [
       "Payments",
       "Payouts",
-      "Cards",
+      "cross boder transfer",
       "Multi-Currency Account",
       "Pricing",
     ],
@@ -24,12 +29,11 @@ const linkColumns = [
       "Help Center",
       "API Documentation",
       "Developers",
-      "System Status",
-      "Community",
+      "Community", // to provide a community link for Linkedin
     ],
   },
   {
-    title: "Legal & Policies",
+    title: "Legal & Policies", // these are impontant will be developed after desing and making the mobile application 
     links: [
       "Privacy Policy",
       "Terms of Service",
@@ -183,9 +187,6 @@ export default function Footer() {
               </Link>
             ))}
           </div>
-          <p className="text-xs font-semibold text-slate-800">
-            Powered by COSMIC
-          </p>
         </div>
       </div>
     </footer>
