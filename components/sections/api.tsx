@@ -1,6 +1,7 @@
-import Image from "next/image";
+"use client";
 import Link from "next/link";
-import { CheckCircle2 } from "lucide-react";
+import { CheckCircle2, Copy, Check } from "lucide-react";
+import { useState } from "react";
 import { GridPattern } from "@/components/base/grid-pattern";
 import { Reveal } from "@/components/base/motion/reveal";
 
@@ -11,6 +12,23 @@ const points = [
 ];
 
 export default function Api() {
+  const [copied, setCopied] = useState(false);
+  const apiSnippet = `curl -X POST "https://api.cosmic.example/v1/transfers" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "source_account": "acc_abc",
+    "amount": 100000,
+    "currency": "USD",
+    "destination": {
+      "name": "Acme Ltd",
+      "iban": "DE89370400440532013000",
+      "country": "DE"
+    },
+    "purpose": "cross-border payment",
+    "metadata": { "invoice": "INV-1234" }
+  }'`;
+
   return (
     <section className="relative overflow-hidden bg-white">
       <GridPattern />
@@ -70,13 +88,48 @@ export default function Api() {
 
         <Reveal delay={0.2}>
           <div className="flex items-center justify-center">
-            <Image
-              src="/cosmicglobe.png"
-              alt="3D globe visualization of COSMIC global payments"
-              width={1536}
-              height={1024}
-              className="h-auto w-[680px] max-w-full"
-            />
+            <div className="relative w-full max-w-2xl rounded-lg bg-slate-900 p-6 text-sm text-slate-50">
+              <button
+                onClick={async () => {
+                  try {
+                    await navigator.clipboard.writeText(apiSnippet);
+                    setCopied(true);
+                    setTimeout(() => setCopied(false), 1800);
+                  } catch (e) {
+                    /* noop */
+                  }
+                }}
+                className="absolute right-3 top-3 inline-flex items-center gap-2 rounded bg-slate-800/40 px-3 py-1 text-xs font-medium hover:bg-slate-800"
+                aria-label="Copy code"
+              >
+                {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+                <span className="hidden sm:inline">{copied ? 'Copied' : 'Copy'}</span>
+              </button>
+
+                            <pre className="max-h-[420px] overflow-auto rounded text-xs bg-slate-900/30 p-3">
+                <code className="font-mono text-[12px] leading-5">
+                  <div><span className="text-pink-400">curl</span> <span className="text-slate-300">-X</span> <span className="text-yellow-300">POST</span> <span className="text-cyan-300">"https://api.cosmic.com/v1/transfers"</span></div>
+                  <div><span className="text-yellow-300">-H</span> <span className="text-green-200">"Authorization:</span><span className="text-amber-200"> Bearer YOUR_API_KEY"</span></div>
+                  <div><span className="text-yellow-300">-H</span> <span className="text-green-200">"Content-Type:</span><span className="text-emerald-200"> application/json"</span></div>
+                  <div className="text-slate-400">-d {'\''}</div>
+                  <div className="pl-4"><span className="text-sky-300">{'{'}</span></div>
+                  <div className="pl-6"><span className="text-green-300">"source_account"</span>: <span className="text-amber-200">"Acc538000878001"</span>,</div>
+                  <div className="pl-6"><span className="text-green-300">"amount"</span>: <span className="text-blue-300">1500</span>,</div>
+                  <div className="pl-6"><span className="text-green-300">"currency"</span>: <span className="text-amber-200">"USD"</span>,</div>
+                  <div className="pl-6"><span className="text-green-300">"destination"</span>: <span className="text-sky-300">{'{'}</span></div>
+                  <div className="pl-8"><span className="text-green-300">"name"</span>: <span className="text-amber-200">"Elius Rwatzinger"</span>,</div>
+                  <div className="pl-8"><span className="text-green-300">"iban"</span>: <span className="text-amber-200">"DE89370400440532013000"</span>,</div>
+                  <div className="pl-8"><span className="text-green-300">"country"</span>: <span className="text-amber-200">"TZ"</span></div>
+                  <div className="pl-6"><span className="text-sky-300">{'}'},</span></div>
+                  <div className="pl-6"><span className="text-green-300">"purpose"</span>: <span className="text-amber-200">"School fee"</span>,</div>
+                  <div className="pl-6"><span className="text-green-300">"metadata"</span>: <span className="text-sky-300">{'{'}</span></div>
+                  <div className="pl-8"><span className="text-green-300">"invoice"</span>: <span className="text-amber-200">"INV-1IO067474884"</span></div>
+                  <div className="pl-6"><span className="text-sky-300">{'}'}</span></div>
+                  <div className="pl-4"><span className="text-sky-300">{'}'}</span></div>
+                  <div className="text-slate-400">{'\''}</div>
+                </code>
+              </pre>
+            </div>
           </div>
         </Reveal>      </div>
     </section>
