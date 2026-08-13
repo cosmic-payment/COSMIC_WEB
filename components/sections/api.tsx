@@ -117,7 +117,7 @@ export default function Api() {
                   <div className="pl-6"><span className="text-green-300">"amount"</span>: <span className="text-blue-300">1500</span>,</div>
                   <div className="pl-6"><span className="text-green-300">"currency"</span>: <span className="text-amber-200">"USD"</span>,</div>
                   <div className="pl-6"><span className="text-green-300">"destination"</span>: <span className="text-sky-300">{'{'}</span></div>
-                  <div className="pl-8"><span className="text-green-300">"name"</span>: <span className="text-amber-200">"Elius Rwatzinger"</span>,</div>
+                  <div className="pl-8"><span className="text-green-300">"name"</span>: <span className="text-amber-200">"David Jackson "</span>,</div>
                   <div className="pl-8"><span className="text-green-300">"iban"</span>: <span className="text-amber-200">"DE89370400440532013000"</span>,</div>
                   <div className="pl-8"><span className="text-green-300">"country"</span>: <span className="text-amber-200">"TZ"</span></div>
                   <div className="pl-6"><span className="text-sky-300">{'}'},</span></div>
